@@ -143,8 +143,7 @@ def get_pubkey(home)
   pubkey_path = "#{privkey_path}.pub"
   if not (::File.exists? privkey_path or ::File.exists? pubkey_path)
     Chef::Log.info("Generating ssh keys for user #{new_resource.admin_user} from #{privkey_path} and #{pubkey_path}")
-    system("su #{new_resource.admin_user} -c 'ssh-keygen -q -f #{privkey_path} " +
-           "-P \"\"'", :in=>"/dev/null")
+    system("su #{new_resource.admin_user} -c 'ssh-keygen -q -f #{privkey_path} " + "-P \"\"'")
     new_resource.updated_by_last_action(true)
   end
   pubkey = ::File.read("#{home}/.ssh/id_rsa.pub").strip
